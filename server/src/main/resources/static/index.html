@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Article Upload</title>
+  </head>
+  <body>
+    <h1>Article Upload</h1>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+      <table>
+        <tr>
+          <td>Title:</td>
+          <td>
+            <input
+              type="text"
+              size="30"
+              name="title"
+              placeholder="Title of your article"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>Content:</td>
+          <td>
+            <textarea
+              type="text"
+              rows="4"
+              cols="30"
+              name="content"
+              placeholder="Text content of your article"
+            ></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>Image:</td>
+          <td>
+            <input
+              type="file"
+              size="30"
+              name="picture"
+              placeholder="Select picture to upload"
+              accept="image/*"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button type="submit">Upload!</button></td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>
