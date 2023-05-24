@@ -20,6 +20,12 @@
         width="200"
         height="auto"
       />
+      <!-- the below is also ok if a get method exists to return the ResponseEntity of the image byte[] -->
+      <img
+        data-th-src="@{/picture/{p_id}(p_id = ${p_id})}"
+        width="200"
+        height="auto"
+      />
     </td>
   </tr>
 </table>

@@ -6,11 +6,15 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,6 +45,7 @@ public class ArticleController {
             mav.addObject("title", article.getTitle());
             mav.addObject("content", article.getContent());
             mav.addObject("picture", Base64.getEncoder().encodeToString(article.getPicture())); // need to use Base64 encoding and put the resulting encoded string into the src attribute of the img element, prepended by 'data:image/jpeg;base64,'
+            // alternatively can new Stringbuilder().append("data:").append(...
             mav.setViewName("success");
             mav.setStatus(HttpStatusCode.valueOf(201));
             return mav;
@@ -49,6 +54,20 @@ public class ArticleController {
             mav.setViewName("error");
             mav.setStatus(HttpStatusCode.valueOf(500));
             return mav;
+        }
+    }
+
+    @GetMapping(path="/picture/{p_id}")
+    @ResponseBody
+    public ResponseEntity<byte[]> getImageById(@PathVariable Integer p_id){
+        Optional<Article> opt = articleService.getArticleById(p_id);
+        if (opt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity
+					.status(200)
+                    .contentType(MediaType.IMAGE_PNG)
+					.body(opt.get().getPicture());
         }
     }
 }
